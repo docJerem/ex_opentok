@@ -3,24 +3,32 @@ defmodule ExOpentok do
   REST API wrapper to communicate with ExOpentok signaling server.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ExOpentok.hello
-      :world
-
-  """
-
   require Logger
 
   @version "0.2.0"
 
   @api_url "https://api.opentok.com/v2/project/"
 
-  def hello do
-    :world
+  @doc """
+  init()
+
+  ## Examples
+
+      iex(1)> ExOpentok.init()
+      %{:api_key => "01234567",
+        :token => "T1==cGFydG5lcl9pZD00NTgxMTExMiZzaWc9OUVBOTIyQjlFQzM0NUIxNkI3NcGFydG5lcl9pZD00NTgxMTExMiZzaWc9OUVBOTIyQjlFQzM0NUIxNkI3NcGFydG5lcl9pZD00NTgxMTExMiZzaWc9OUVBOTIyQjlFQzM0NUIxNkI3NcGFydG5lcl9pZD00NTgxMTExMiZzaWc9OUVBOTIyQjlFQzM0NUIxNkI3N==",
+        "create_dt" => "Tue Apr 11 08:56:40 PDT 2017",
+        "ice_credential_expiration" => 86100, "ice_server" => nil,
+        "ice_servers" => nil, "media_server_hostname" => nil,
+        "media_server_url" => "", "messaging_server_url" => nil,
+        "messaging_url" => nil, "partner_id" => "01234567",
+        "project_id" => "01234567", "properties" => nil,
+        "session_id" => "1_MX40MX40NTgxMMX40NTgxMMX40NTgxMMX40NTgxMMX40NTgxMMX40NTg",
+        "session_status" => nil, "status_invalid" => nil, "symphony_address" => nil}
+
+  """
+  def init do
+    ExOpentok.Session.init()
   end
 
   @doc false
@@ -28,30 +36,7 @@ defmodule ExOpentok do
 
   def api_url, do: @api_url
 
-  # GUARD CLAUSES
-  unless Application.get_env(:ex_opentok, ExOpentok) do
-    raise "ExOpentok is not configured"
-  end
-
-  unless Keyword.get(Application.get_env(:ex_opentok, ExOpentok), :key) do
-    raise "ExOpentok requires :key to be configured"
-  end
-
-  unless Keyword.get(Application.get_env(:ex_opentok, ExOpentok), :secret) do
-    raise "ExOpentok requires :secret to be configured"
-  end
-
   # CONFIG
-
   @doc false
-  def config, do: Application.get_env(:open_tok_sdk, ExOpentok)
-
-  @doc false
-  def config(key, default \\ nil), do: config() |> Keyword.get(key, default) |> resolve_config(default)
-
-  defp allowed_algos, do: config(:allowed_algos, @default_algos)
-
-  defp resolve_config({:system, var_name}, default), do: System.get_env(var_name) || default
-
-  defp resolve_config(value, _default), do: value
+  def config(key), do: Application.get_env(:ex_opentok, key)
 end

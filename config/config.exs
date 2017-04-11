@@ -20,12 +20,12 @@ use Mix.Config
 #
 #     config :logger, level: :info
 #
-config :ex_opentok, ExOpentok,
+config :ex_opentok, 
   iss: "project",
   key: System.get_env("OPENTOKSDK_KEY"),
   secret: System.get_env("OPENTOKSDK_SECRET"),
   ttl: 300
-  
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

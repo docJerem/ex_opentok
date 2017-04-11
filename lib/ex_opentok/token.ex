@@ -22,8 +22,8 @@ defmodule ExOpentok.Token do
 
   defp token_process(data_content, session_id) do
     data_content
-    |> sign_string(config(:secret))
-    |> data_string(config(:ttl))
+    |> sign_string(ExOpentok.config(:secret))
+    |> data_string(ExOpentok.config(:ttl))
     |> token(data_content)
   end
 
@@ -42,33 +42,22 @@ defmodule ExOpentok.Token do
   def jwt do
     import Joken
 
-    %{
-      iss: ExOpentok.config(:key),
-      iat: :os.system_time(:seconds),
-      exp: :os.system_time(:seconds) + 300,
-      ist: config(:iss, "project")  ,
-      jti: UUID.uuid4()
-    }
+    data_from_config()
     |> token()
     |> with_signer(hs256(ExOpentok.config(:secret)))
     |> sign()
     |> get_compact()
   end
 
-  # DATA STRING
-
-  # @spec data_string(String.t, nil | String.t, nil | String.t) :: String.t
-  # defp data_string(string, nil, nil), do: string
-  #
-  # defp data_string(string, expire_time, nil), do: string <> "&expire_time=#{expire_time}"
-  #
-  # defp data_string(string, nil, connection_data), do: string <> "&connection_data=#{URI.encode(connection_data)}"
-  #
-  # defp data_string(string, expire_time, connection_data) do
-  #     string
-  #     |> data_string(expire_time, nil)
-  #     |> data_string(nil, connection_data)
-  # end
+  defp data_from_config do
+    %{
+      iss: ExOpentok.config(:key),
+      iat: :os.system_time(:seconds),
+      exp: :os.system_time(:seconds) + 300,
+      ist: ExOpentok.config(:iss)  ,
+      jti: UUID.uuid4()
+    }
+  end
 
   @spec sign_string(String.t, String.t) :: String.t
   defp sign_string(string, secret) do
@@ -76,17 +65,4 @@ defmodule ExOpentok.Token do
       |> :crypto.hmac(secret, string)
       |> Base.encode16
   end
-
-  # CONFIG
-  @doc false
-  def config, do: Application.get_env(:open_tok_sdk, ExOpentok)
-  @doc false
-  def config(key, default \\ nil), do: config() |> Keyword.get(key, default) |> resolve_config(default)
-
-  defp allowed_algos, do: config(:allowed_algos, @default_algos)
-
-  defp resolve_config({:system, var_name}, default), do: System.get_env(var_name) || default
-
-  defp resolve_config(value, _default), do: value
-
 end

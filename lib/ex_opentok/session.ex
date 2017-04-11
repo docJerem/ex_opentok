@@ -4,9 +4,9 @@ defmodule ExOpentok.Session do
   """
 
   require Logger
-  use HTTPoison.Base
+  # use HTTPoison.Base
   alias ExOpentok.Client
-  alias Token
+  alias ExOpentok.Token
 
   @doc """
   Create new WebRTC session.

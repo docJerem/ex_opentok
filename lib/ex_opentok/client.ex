@@ -1,8 +1,8 @@
 defmodule ExOpentok.Client do
   require Logger
-  use HTTPoison.Base
+  # use HTTPoison.Base
   alias ExOpentok.Token
-  alias ExOpentok.ApiError
+  alias ExOpentok.Exception
 
   @moduledoc """
   Wrapper for HTTPotion

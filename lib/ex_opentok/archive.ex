@@ -34,7 +34,7 @@ defmodule ExOpentok.Archive do
         body |> Poison.decode!()
       %{status_code: 400} ->
         Logger.error fn -> "Error 400 The archive could not be started. The request was invalid or the session has no connected clients." end
-        {:error, ExOpentok.ApiError}
+        {:error, ExOpentok.Exception}
       %{status_code: 403, body: body} ->
         Logger.error fn -> "Error 403 Authentication failed while starting an archive. API Key: #{ExOpentok.config(:key)}" end
       %{status_code: 404, body: body} ->
@@ -46,7 +46,7 @@ defmodule ExOpentok.Archive do
 
       _ ->
         Logger.error fn -> "The archive could not be started" end
-        {:error, ExOpentok.ApiError}
+        {:error, ExOpentok.Exception}
     end
   end
 
@@ -94,6 +94,30 @@ defmodule ExOpentok.Archive do
 
   To list archives for your API key, both completed and in-progress, submit an
   HTTP GET request.
+
+  iex(1)> ExOpentok.Archive.list()
+  %{"count" => 2,
+    "items" => [%{"createdAt" => 1491851152000, "duration" => 2,
+       "hasAudio" => true, "hasVideo" => true,
+
+       "id" => "01234567-0123-0123-0123-012345678901",
+       "name" => "archive-45811112-e44e2c5f-c885-45a4-b9be-0143d28c1ddf",
+       "outputMode" => "composed", "partnerId" => 45811112, "password" => "",
+       "projectId" => 01234567, "reason" => "user initiated",
+       "sessionId" => "2_MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40",
+       "sha256sum" => "2_MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40",
+       "size" => 163575, "status" => "available", "updatedAt" => 1491851160000,
+       "url" => "https://s3.amazonaws.com/tokbox.com.archive2/01234567/01234567-0123-0123-0123-012345678901/archive.mp4?AWSAccessKeyId=01234567-0123-0123-0123-012345678901Expires=01234567-0123-0123-0123-012345678901&Signature=01234567-0123-0123-0123-012345678901"},
+     %{"createdAt" => 1491682306000, "duration" => 21, "hasAudio" => true,
+       "hasVideo" => true, "id" => "01234567-0123-0123-0123-012345678901",
+       "name" => "Elixir Archiving Sample App", "outputMode" => "composed",
+       "partnerId" => 45811112, "password" => "", "projectId" => 01234567,
+       "reason" => "user initiated",
+       "sessionId" => "2_MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40",
+       "sha256sum" => "2_MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40MX40",
+       "size" => 1742751, "status" => "available", "updatedAt" => 1491682333000,
+       "url" => "https://s3.amazonaws.com/tokbox.com.archive2/01234567/01234567-0123-0123-0123-012345678901/archive.mp4?AWSAccessKeyId=01234567-0123-0123-0123-012345678901Expires=01234567-0123-0123-0123-012345678901&Signature=01234567-0123-0123-0123-012345678901"}]}
+
   """
   def list(opts \\ %{offset: 0, count: 1000}) do
     ExOpentok.api_url() <> "#{ExOpentok.config(:key)}/archive?offset=#{opts.offset}&count=#{opts.count}"
