@@ -54,7 +54,7 @@ defmodule ExOpentok.Token do
       iss: ExOpentok.config(:key),
       iat: :os.system_time(:seconds),
       exp: :os.system_time(:seconds) + 300,
-      ist: ExOpentok.config(:iss)  ,
+      ist: ExOpentok.config(:iss),
       jti: UUID.uuid4()
     }
   end

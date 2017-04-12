@@ -9,10 +9,8 @@ defmodule ExOpentokTest.Helper do
   end
 
   def archive_keys do
-    ["createdAt", "duration", "hasAudio",
-    "hasVideo", "id", "f40f1ef1-2b0e-49e6-a057-6e4d9c503831",
-    "name", "archive-45811112-e44e2c5f-c885-45a4-b9be-0143d28c1ddf",
-    "outputMode", "composed", "partnerId", "password", "projectId", "reason",
+    ["createdAt", "duration", "hasAudio", "hasVideo", "id", "name",
+    "outputMode", "partnerId", "password", "projectId", "reason",
     "sessionId", "sha256sum", "size", "status", "updatedAt", "url"]
   end
 end
