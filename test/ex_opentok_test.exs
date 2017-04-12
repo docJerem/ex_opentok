@@ -25,8 +25,10 @@ defmodule ExOpentokTest do
     |> Helper.same_map?(Helper.archive_keys())
   end
 
+  # @NB Archive.delete() tested with selenium in the OpenTok-Phoenix-SDK package
+
   # CLIENT
-  
+
   # Client.http_request()
   test "should get 200 when request get" do
     response = Client.http_request("https://api.opentok.com/v2/project/#{@api_key}/archive?offset=0&count=1000", :get)

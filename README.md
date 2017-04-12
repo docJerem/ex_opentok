@@ -4,7 +4,7 @@ A Wrapper of Open Tok (Tokbox) API for elixir.
 
 # OpenTok Elixir SDK
 
-The OpenTok Ruby SDK lets you generate
+The OpenTok Elixir SDK lets you generate
 [sessions](http://www.tokbox.com/opentok/tutorials/create-session/) and
 [tokens](http://www.tokbox.com/opentok/tutorials/create-token/) for
 [OpenTok](http://www.tokbox.com/) applications, and
@@ -110,7 +110,17 @@ the `ExOpentok.Archive.find(archive_id)` method.
 
 ```elixir
 
-archive = ExOpentok.Archive.find(archive_id)
+  iex(1)> ExOpentok.Archive.find(archive_id)
+
+  %{"createdAt" => 1491682306000, "duration" => 21, "hasAudio" => true,
+    "hasVideo" => true, "id" => "5c48fb135c48fb13e581d8ed5c48fb13",
+    "name" => "Elixir Archiving Sample App", "outputMode" => "composed",
+    "partnerId" => 123456789, "password" => "", "projectId" => 123456789,
+    "reason" => "user initiated",
+    "sessionId" => "1_5c48fb135c48fb135c48fb135c48fb135c48fb135c48fb135c48fb13-fg",
+    "sha256sum" => "97+WlyjwonBOTK7FwonBOTK7FwonBOTK7FwonBOTK7Fw=",
+    "size" => 1742751, "status" => "expired", "updatedAt" => 1491943883000,
+    "url" => nil}
 
 ```
 
@@ -119,7 +129,7 @@ To delete an Archive, you can call the `ExOpentok.Archive.delete(archive_id)` me
 ```elixir
 
 # Delete an Archive from an archive_id (fetched from database)
-ExOpentok.Archive.delete(archive_id)
+  iex(1)> ExOpentok.Archive.delete(archive_id)
 
 ```
 
@@ -129,11 +139,23 @@ used to specify an `:offset` and `:count` to help you paginate through the resul
 
 ```elixir
 
-archive_list = ExOpentok.Archive.list()
+  iex(1)> ExOpentok.Archive.list()
 
-# or
+  # or
 
-archive_list = ExOpentok.Archive.list(%{offset: 0, count: 1000})
+  iex(1)> ExOpentok.Archive.list(%{offset: 0, count: 1000})
+
+  %{"count" => 1,
+    "items" => [%{"createdAt" => 1491682306000, "duration" => 21,
+       "hasAudio" => true, "hasVideo" => true,
+       "id" => "5c48fb13-f5c48fb13-5c48fb13",
+       "name" => "Ruby Archiving Sample App", "outputMode" => "composed",
+       "partnerId" => 45811112, "password" => "", "projectId" => 45811112,
+       "reason" => "user initiated",
+       "sessionId" => "1_5c48fb135c48fb135c48fb135c48fb135c48fb135c48fb13-fg",
+       "sha256sum" => "97+5c48fb135c48fb135c48fb135c48fb135c48fb13=",
+       "size" => 1742751, "status" => "expired", "updatedAt" => 1491943883000,
+       "url" => nil}]
 
 ```
 

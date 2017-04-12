@@ -85,8 +85,8 @@ defmodule ExOpentok.Archive do
   For an "available" archive, it also removes the archive file, making it unavailable for download.
   """
   def delete(archive_id) do
-    ExOpentok.api_url() <> "#{ExOpentok.config(:key)}/archive/#{archive_id}/stop"
-    |> Client.http_request(:post)
+    ExOpentok.api_url() <> "#{ExOpentok.config(:key)}/archive/#{archive_id}"
+    |> Client.http_request(:delete)
     |> Client.handle_response()
   end
 
