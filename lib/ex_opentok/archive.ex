@@ -34,20 +34,19 @@ defmodule ExOpentok.Archive do
       %{status_code: 200, body: body} ->
         body |> Poison.decode!()
       %{status_code: 400} ->
-        Logger.error fn -> "Error 400 The archive could not be started. The request was invalid or the session has no connected clients." end
+        raise "Error 400 The archive could not be started. The request was invalid or the session has no connected clients."
         {:error, ExOpentok.Exception}
       %{status_code: 403, body: body} ->
-        Logger.error fn -> "Error 403 Authentication failed while starting an archive. API Key: #{ExOpentok.config(:key)}" end
+        raise "Error 403 Authentication failed while starting an archive. API Key: #{ExOpentok.config(:key)}"
       %{status_code: 404, body: body} ->
-        Logger.error fn -> "Error 404 The archive could not be started. The Session ID does not exist: #{sessionId}" end
+        raise "Error 404 The archive could not be started. The Session ID does not exist: #{sessionId}"
       %{status_code: 409, body: body} ->
-        Logger.error fn -> "Error 409 The archive could not be started. The session could be peer-to-peer or the session is already being recorded." end
+        raise "Error 409 The archive could not be started. The session could be peer-to-peer or the session is already being recorded."
       %{status_code: 415, body: body} ->
-        Logger.error fn -> "Error 415 Server is not able to process the Content-Type of the request." end
+        raise "Error 415 Server is not able to process the Content-Type of the request."
 
       _ ->
-        Logger.error fn -> "The archive could not be started" end
-        {:error, ExOpentok.Exception}
+        raise "The archive could not be started"
     end
   end
 
