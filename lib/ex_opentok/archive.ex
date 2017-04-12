@@ -24,6 +24,7 @@ defmodule ExOpentok.Archive do
   outputMode (String) — (Optional) Whether all streams in the archive are recorded to a single file ("composed", the default) or to individual files ("individual").
   """
   def start(sessionId) do
+    IO.inspect(sessionId)
     HTTPotion.start()
     response = HTTPotion.post(ExOpentok.api_url() <> "/#{ExOpentok.config(:key)}/archive", [
         body: '{"sessionId" : "#{sessionId}", "name" : "#{generate_name()}"}',

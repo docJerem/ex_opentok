@@ -47,8 +47,7 @@ defmodule ExOpentok.Client do
       %{status_code: 405, body: body} ->
         raise "405 Method not allowed"
       _ ->
-        Logger.error fn -> "ExOpentok query: #{inspect(response)}" end
-        {:error, ApiError}
+        raise "Error #{response.status_code} -> ExOpentok query:\n #{inspect(response)}"
     end
   end
 

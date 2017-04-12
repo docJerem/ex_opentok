@@ -32,7 +32,6 @@ Allow bundler to install the change.
 $ mix deps.get
 ```
 
-
 # Usage
 
 ## Initializing
@@ -48,7 +47,6 @@ config :ex_opentok,
   ttl: 300
 
 ```
-
 
 ## Creating Sessions
 
@@ -107,7 +105,7 @@ opentok.archives.stop(archive_id)
 
 ```
 
-To get an `OpenTok::Archive` instance (and all the information about it) from an `archive_id`, use
+To get an `ExOpentok.Archive` map (and all the information about it) from an `archive_id`, use
 the `ExOpentok.Archive.find(archive_id)` method.
 
 ```elixir
@@ -132,6 +130,10 @@ used to specify an `:offset` and `:count` to help you paginate through the resul
 ```elixir
 
 archive_list = ExOpentok.Archive.list()
+
+# or
+
+archive_list = ExOpentok.Archive.list(%{offset: 0, count: 1000})
 
 ```
 
