@@ -5,7 +5,7 @@ defmodule ExOpentok do
 
   require Logger
 
-  @version "0.2.0"
+  @version "0.1.0"
 
   @api_url "https://api.opentok.com/v2/project/"
 
